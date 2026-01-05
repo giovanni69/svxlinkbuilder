@@ -19,9 +19,9 @@ if echo "$sound_cards" | grep -q 'USB-Audio'; then
 fi
 
 # Check for Seeed 2-mic voice card
-if echo "$sound_cards" | grep -q 'seeed-2mic-voicecard'; then
+if echo "$sound_cards" | grep -q 'seeed-2mic-voicecard|wm8960soundcard'; then
     echo "Carte Seeed 2-mic voice detectée:"
-    echo "$sound_cards" | grep -A 1 'seeed-2mic-voicecard'
+    #echo "$sound_cards" | grep -A 1 'seeed-2mic-voicecard'
     seeed_sound_card_detected=true
 fi
 # Check for Fe-Pi / ICS repeater sound card
@@ -121,7 +121,7 @@ function seeed_sound_card_detected {
 HID=false
 GPIOD=true
 card=true
-plughw_setting="seeed2micvoicecard,0"
+plughw_setting="0"
 channel_setting="1"
 }
 function fepi_sound_card_detected {

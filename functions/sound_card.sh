@@ -17,10 +17,10 @@ if echo "$sound_cards" | grep -q 'USB-Audio'; then
     usb_sound_card_detected=true
 fi
 
-# Check for Seeed 2-mic voice card
-if echo "$sound_cards" | grep -q 'seeed-2mic-voicecard'; then
-    echo "Seeed 2-mic voice card detected:" | sudo tee -a /var/log/install.log > /dev/null
-    echo "$sound_cards" | grep -A 1 'seeed-2mic-voicecard'
+# Check for Seeed 2-mic or WM8960 voice card
+if echo "$sound_cards" | grep -q 'seeed-2mic-voicecard|wm8960soundcard'; then
+    echo "WM8960 type voice card detected:" | sudo tee -a /var/log/install.log > /dev/null
+    #echo "$sound_cards" | grep -A 1 'seeed-2mic-voicecard|wm8960soundcard'
     seeed_sound_card_detected=true
 fi
 # Check for Fe-Pi / ICS repeater sound card
@@ -122,7 +122,7 @@ function seeed_sound_card_detected {
 HID=false
 GPIOD=true
 card=true
-plughw_setting="seeed2micvoicecard,0"
+#plughw_setting="seeed2micvoicecard,0"
 channel_setting="1"
 }
 function fepi_sound_card_detected {
