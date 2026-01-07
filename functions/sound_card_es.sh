@@ -16,11 +16,15 @@ if echo "$sound_cards" | grep -q 'USB-Audio'; then
     echo "$sound_cards" | grep -A 1 'USB-Audio'
     usb_sound_card_detected=true
 fi
-
+# Check for WM8960 sound card
+if echo "$sound_cards" | grep -q 'wm8960'; then
+    echo "WM8960 sound card detected:"
+    echo "$sound_cards" | grep -A 1 'wm8960'
+    usb_sound_card_detected=true
 # Check for Seeed 2-mic voice card
-if echo "$sound_cards" | grep -q 'seeed-2mic-voicecard|wm8960soundcard'; then
+if echo "$sound_cards" | grep -q 'seeed-2mic-voicecard'; then
     echo "Seeed 2-mic voice card detected:"
-    #echo "$sound_cards" | grep -A 1 'seeed-2mic-voicecard|wm8960soundcard'
+    echo "$sound_cards" | grep -A 1 'seeed-2mic-voicecard'
     seeed_sound_card_detected=true
 fi
 # Check for Fe-Pi / ICS repeater sound card
