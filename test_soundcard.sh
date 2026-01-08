@@ -1,7 +1,8 @@
 #!/bin/bash
 ##### USB SOUND CARD ####
-#source "${BASH_SOURCE%/*}/functions/sound_card.sh"
-#soundcard
+#
+source "${BASH_SOURCE%/*}/functions/sound_card.sh"
+soundcard
 ##### NODE Selection ####
 #source "${BASH_SOURCE%/*}/functions/node_type.sh"
 #nodeoption
