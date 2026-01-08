@@ -53,7 +53,6 @@ if echo "$sound_cards" | grep -q '[0-9] \[' \
     other_sound_card_detected  
     # Add your specific handling code here for other sound cards
 fi
-
 }
 ## Print the assigned variable value
 
