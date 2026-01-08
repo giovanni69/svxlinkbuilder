@@ -15,31 +15,31 @@ fepi_sound_card_detected=false
 if echo "$sound_cards" | grep -q 'USB-Audio'; then
     echo "USB sound card detected:" | sudo tee -a /var/log/install.log > /dev/null
     echo "$sound_cards" | grep -A 1 'USB-Audio'
-    usb_sound_card_detected=true
+    usb_sound_card_detected
 fi
 #Check for WM8960 sound card
 if echo "$sound_cards" | grep -q 'wm8960soundcard'; then
     echo "WM8960 sound card detected:" | sudo tee -a /var/log/install.log > /dev/null
     echo "$sound_cards" | grep -A 1 'wm8960'
-    usb_sound_card_detected=true
+    usb_sound_card_detected
 # Check for Seeed 2-mic or WM8960 voice card
 if echo "$sound_cards" | grep -q 'seeed-2mic-voicecard'; then
-    echo "WM8960 type voice card detected:" | sudo tee -a /var/log/install.log > /dev/null
+    echo "Seeed 2-mic voice card detected:" | sudo tee -a /var/log/install.log > /dev/null
     #echo "$sound_cards" | grep -A 1 'seeed-2mic-voicecard'
-    usb_sound_card_detected=true
+    usb_sound_card_detected
 fi
 # Check for Fe-Pi / ICS repeater sound card
 if echo "$sound_cards" | grep -Eq 'Fe-Pi|FePi|sndrpihifiberry|HifiBerry'; then
     echo "Fe-Pi / ICS sound card detected:" | sudo tee -a /var/log/install.log > /dev/null
     echo "$sound_cards" | grep -E 'Fe-Pi|FePi|sndrpihifiberry|HifiBerry'
-    usb_sound_card_detected=true
+    usb_sound_card_detected
 fi
 
 # Check for any other sound cards not explicitly identified by name and not Loopback
 if echo "$sound_cards" | grep -q '[0-9] \[' && ! echo "$sound_cards" | grep -q 'Loopback' && ! $usb_sound_card_detected && ! $seeed_sound_card_detected; then
     echo "Other sound card detected:" | sudo tee -a /var/log/install.log > /dev/null
     echo "$sound_cards" | grep -v 'Loopback' 
-    other_sound_card_detected=true
+    other_sound_card_detected
 fi
 
 # If no sound card is detected or only Loopback card is detected
