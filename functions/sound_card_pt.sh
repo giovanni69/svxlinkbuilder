@@ -5,11 +5,11 @@ function soundcard {
 sound_cards=$(cat /proc/asound/cards)
 
 # Initialize variables to identify sound card types
-usb_sound_card_detected=false
-seeed_sound_card_detected=false
-other_sound_card_detected=false
-fepi_sound_card_detected=false
-wm8960_sound_card_detected=false
+#usb_sound_card_detected=false
+#seeed_sound_card_detected=false
+#other_sound_card_detected=false
+#fepi_sound_card_detected=false
+#wm8960_sound_card_detected=false
 
 # Check for USB sound card
 if echo "$sound_cards" | grep -q 'USB-Audio'; then
@@ -22,6 +22,7 @@ if echo "$sound_cards" | grep -q 'wm8960soundcard'; then
     echo "Placa de som WM8960 detetada:" | sudo tee -a /var/log/install.log > /dev/null
     echo "$sound_cards" | grep -A 1 'wm8960'
     usb_sound_card_detected
+fi
 # Check for Seeed 2-mic voice card
 if echo "$sound_cards" | grep -q 'seeed-2mic-voicecard|wm8960soundcard'; then
     echo "Placa WM8960 type voice detetada:" | sudo tee -a /var/log/install.log > /dev/null
