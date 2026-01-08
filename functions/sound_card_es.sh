@@ -9,39 +9,39 @@ usb_sound_card_detected=false
 seeed_sound_card_detected=false
 other_sound_card_detected=false
 fepi_sound_card_detected=false
-
+wm8960_sound_card_detected=false
 # Check for USB sound card
 if echo "$sound_cards" | grep -q 'USB-Audio'; then
     echo "USB sound card detected:"
     echo "$sound_cards" | grep -A 1 'USB-Audio'
-    usb_sound_card_detected=true
+    usb_sound_card_detected
 fi
 # Check for WM8960 sound card
 if echo "$sound_cards" | grep -q 'wm8960'; then
     echo "WM8960 sound card detected:"
     echo "$sound_cards" | grep -A 1 'wm8960'
-    usb_sound_card_detected=true
+    usb_sound_card_detected
 # Check for Seeed 2-mic voice card
 if echo "$sound_cards" | grep -q 'seeed-2mic-voicecard'; then
     echo "Seeed 2-mic voice card detected:"
     echo "$sound_cards" | grep -A 1 'seeed-2mic-voicecard'
-    seeed_sound_card_detected=true
+    usb_sound_card_detected
 fi
 # Check for Fe-Pi / ICS repeater sound card
 if echo "$sound_cards" | grep -Eq 'Fe-Pi|FePi|sndrpihifiberry|HifiBerry'; then
     echo "Fe-Pi / ICS sound card detected:"
     echo "$sound_cards" | grep -E 'Fe-Pi|FePi|sndrpihifiberry|HifiBerry'
-    fepi_sound_card_detected=true
+    usb_sound_card_detected
 fi  
 # Check for any other sound cards not explicitly identified by name and not Loopback
 if echo "$sound_cards" | grep -q '[0-9] \[' && ! echo "$sound_cards" | grep -q 'Loopback' && ! $usb_sound_card_detected && ! $seeed_sound_card_detected; then
     echo "Other sound card detected:"
     echo "$sound_cards" | grep -v 'Loopback'
-    other_sound_card_detected=true
+    other_sound_card_detected
 fi
 if $fepi_sound_card_detected; then
     echo "Handling Fe-Pi / ICS sound card specifics..." | sudo tee -a /var/log/install.log > /dev/null
-    fepi_sound_card_detected  
+    usb_sound_card_detected  
     # Add your specific handling code here for Fe-Pi / ICS sound card
 fi
 # If no sound card is detected or only Loopback card is detected
@@ -51,17 +51,7 @@ if ! $usb_sound_card_detected && ! $seeed_sound_card_detected && ! $other_sound_
 fi
 
 # Handle based on detected sound card type
-if $usb_sound_card_detected; then
-    echo "Handling USB sound card specifics..." | sudo tee -a /var/log/install.log > /dev/null
-    usb_sound_card_detected
-    # Add your specific handling code here for USB sound card
-fi
 
-if $seeed_sound_card_detected; then
-    echo "Handling Seeed 2-mic voice card specifics..." | sudo tee -a /var/log/install.log > /dev/null
-    seeed_sound_card_detected  
-    # Add your specific handling code here for Seeed 2-mic voice card
-fi
 
 if $other_sound_card_detected; then
     echo "Handling other sound card specifics..." | sudo tee -a /var/log/install.log > /dev/null

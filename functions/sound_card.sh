@@ -42,18 +42,7 @@ if echo "$sound_cards" | grep -q '[0-9] \[' && ! echo "$sound_cards" | grep -q '
     other_sound_card_detected
 fi
 
-# If no sound card is detected or only Loopback card is detected
-if ! $usb_sound_card_detected && ! $seeed_sound_card_detected && ! $other_sound_card_detected; then
-    echo "No sound card detected or only Loopback card detected." | sudo tee -a /var/log/install.log > /dev/null
-    no_sound_card_detected
-fi
 
-# Handle based on detected sound card type
-if $usb_sound_card_detected; then
-    echo "Handling USB sound card specifics..." | sudo tee -a /var/log/install.log > /dev/null
-    usb_sound_card_detected
-    # Add your specific handling code here for USB sound card
-fi
 
 if echo "$sound_cards" | grep -q '[0-9] \[' \
    && ! echo "$sound_cards" | grep -q 'Loopback' \

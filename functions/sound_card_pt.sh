@@ -15,29 +15,29 @@ wm8960_sound_card_detected=false
 if echo "$sound_cards" | grep -q 'USB-Audio'; then
     echo "Placa de som USB detetada:" | sudo tee -a /var/log/install.log > /dev/null
     echo "$sound_cards" | grep -A 1 'USB-Audio'
-    usb_sound_card_detected=true
+    usb_sound_card_detected
 fi
 #check for WM8960 sound card
 if echo "$sound_cards" | grep -q 'wm8960soundcard'; then
     echo "Placa de som WM8960 detetada:" | sudo tee -a /var/log/install.log > /dev/null
     echo "$sound_cards" | grep -A 1 'wm8960'
-    usb_sound_card_detected=true
+    usb_sound_card_detected
 # Check for Seeed 2-mic voice card
 if echo "$sound_cards" | grep -q 'seeed-2mic-voicecard|wm8960soundcard'; then
     echo "Placa WM8960 type voice detetada:" | sudo tee -a /var/log/install.log > /dev/null
     #echo "$sound_cards" | grep -A 1 'seeed-2mic-voicecard|wm8960soundcard'
-    usb_sound_card_detected=true
+    usb_sound_card_detected
 fi
 # Check for Fe-Pi / ICS repeater sound card
 if echo "$sound_cards" | grep -Eq 'Fe-Pi|FePi|sndrpihifiberry|HifiBerry'; then
     echo "Placa Fe-Pi / ICS detetada:" | sudo tee -a /var/log/install.log > . /dev/null
     echo "$sound_cards" | grep -E 'Fe-Pi|FePi|sndrpihifiberry|HifiBerry'
-    usb_sound_card_detected=true
+    usb_sound_card_detected
 # Check for any other sound cards not explicitly identified by name and not Loopback
 if echo "$sound_cards" | grep -q '[0-9] \[' && ! echo "$sound_cards" | grep -q 'Loopback' && ! $usb_sound_card_detected && ! $seeed_sound_card_detected; then
     echo "Placa Generica detetada:" | sudo tee -a /var/log/install.log > /dev/null
     echo "$sound_cards" | grep -v 'Loopback' 
-    other_sound_card_detected=true
+    other_sound_card_detected
 fi
 
 # If no sound card is detected or only Loopback card is detected
@@ -46,18 +46,7 @@ if ! $usb_sound_card_detected && ! $seeed_sound_card_detected && ! $other_sound_
     no_sound_card_detected
 fi
 
-# Handle based on detected sound card type
-if $usb_sound_card_detected; then
-    echo "Defenindo detalhes da placa USB..." | sudo tee -a /var/log/install.log > /dev/null
-    usb_sound_card_detected
-    # Add your specific handling code here for USB sound card
-fi
 
-if $other_sound_card_detected; then
-    echo "Defenindo detalhes da placa Generica..." | sudo tee -a /var/log/install.log > /dev/null
-    other_sound_card_detected
-    # Add your specific handling code here for other sound cards
-fi
 
 }
 ## Print the assigned variable value
