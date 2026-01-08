@@ -75,13 +75,21 @@ if [[ "$HID" == "false" ]] && [[ "$GPIOD" == "true" ]] && [[ "$card" == "false" 
     fi
 
     if [[ "$ptt_direction" == "Alto" ]]; then
-         sed -i 's/\#PTT_TYPE=GPIOD/PTT_TYPE=GPIOD/g' /etc/svxlink/svxlink.conf
-         sed -i 's/\#PTT_GPIOD_CHIP/PTT_GPIOD_CHIP/g' /etc/svxlink/svxlink.conf
+             sed -i 's/\#PTT_TYPE=GPIOD/PTT_TYPE=GPIOD/g' /etc/svxlink/svxlink.conf
+         if [[ "$ptt_pin" != "GPIO506" ]]; then
+            sed -i 's/\#PTT_GPIOD_CHIP=gpiochip0/PTT_GPIOD_CHIP=gpiochip0/g' /etc/svxlink/svxlink.conf
+         else   
+            sed -i "s/\#PTT_GPIOD_GPIO=gpiochip0/PTT_GPIOD_CHIP=gpiochip2/g" /etc/svxlink/svxlink.conf
+         fi        
          sed -i "s/\#PTT_GPIOD_LINE=24/PTT_GPIOD_LINE=\!$ptt_pin/g" /etc/svxlink/svxlink.conf
 
     elif [[ "$ptt_direction" == "Basso" ]]; then
         sed -i 's/\#PTT_TYPE=GPIOD/PTT_TYPE=GPIOD/g' /etc/svxlink/svxlink.conf
-        sed -i 's/\#PTT_GPIOD_CHIP/PTT_GPIOD_CHIP/g' /etc/svxlink/svxlink.conf
+         if [[ "$ptt_pin" != "GPIO506" ]]; then
+            sed -i 's/\#PTT_GPIOD_CHIP=gpiochip0/PTT_GPIOD_CHIP=gpiochip0/g' /etc/svxlink/svxlink.conf
+         else   
+            sed -i "s/\#PTT_GPIOD_GPIO=gpiochip0/PTT_GPIOD_CHIP=gpiochip2\!$ptt_pin/g" /etc/svxlink/svxlink.conf
+         fi
         sed -i "s/\#PTT_GPIOD_LINE=24/PTT_GPIOD_LINE=$ptt_pin/g" /etc/svxlink/svxlink.conf
     else
         echo no actions here.
@@ -109,11 +117,11 @@ if [[ "$HID" == "false" ]] && [[ "$GPIOD" == "true" ]] && [[ "$card" == "false" 
     sed -i 's/\#SQL_DET=GPIOD/SQL_DET=GPIOD/g' /etc/svxlink/svxlink.conf
     if [[ "$cos_direction" == "Alto" ]]; then
         sed -i 's/\#SQL_GPIOD_CHIP/SQL_GPIOD_CHIP/g' /etc/svxlink/svxlink.conf
-        sed -i "s/\#SQL_GPIOD_LINE=\!23/SQL_GPIOD_LINE=\!$cos_pin/g" /etc/svxlink/svxlink.conf
+        sed -i "s/\#SQL_GPIOD_LINE=23/SQL_GPIOD_LINE=\!$cos_pin/g" /etc/svxlink/svxlink.conf
 
     elif [[ "$cos_direction" == "Basso" ]]; then
         sed -i 's/\#SQL_GPIOD_CHIP/SQL_GPIOD_CHIP/g' /etc/svxlink/svxlink.conf
-        sed -i "s/\#SQL_GPIOD_LINE=\!23/SQL_GPIOD_LINE=$cos_pin/g" /etc/svxlink/svxlink.conf
+        sed -i "s/\#SQL_GPIOD_LINE=23/SQL_GPIOD_LINE=$cos_pin/g" /etc/svxlink/svxlink.conf
     else
         echo no action here
     fi
@@ -144,11 +152,11 @@ elif [[ "$HID" == "true" ]] && [[ "$GPIOD" == "true" ]] && [[ "$card" == "true" 
     sed -i 's/\#SQL_DET=GPIOD/SQL_DET=GPIOD/g' /etc/svxlink/svxlink.conf
     if [[ "$cos_direction" == "Alto" ]]; then
         sed -i 's/\#SQL_GPIOD_CHIP/SQL_GPIOD_CHIP/g' /etc/svxlink/svxlink.conf
-        sed -i "s/\#SQL_GPIOD_LINE=\!23/SQL_GPIOD_LINE=\!$cos_pin/g" /etc/svxlink/svxlink.conf
+        sed -i "s/\#SQL_GPIOD_LINE=23/SQL_GPIOD_LINE=\!$cos_pin/g" /etc/svxlink/svxlink.conf
 
     elif [[ "$cos_direction" == "Basso" ]]; then
         sed -i 's/\#SQL_GPIOD_CHIP/SQL_GPIOD_CHIP/g' /etc/svxlink/svxlink.conf
-        sed -i "s/\#SQL_GPIOD_LINE=\!23/SQL_GPIOD_LINE=$cos_pin/g" /etc/svxlink/svxlink.conf
+        sed -i "s/\#SQL_GPIOD_LINE=23/SQL_GPIOD_LINE=$cos_pin/g" /etc/svxlink/svxlink.conf
     else
         echo no action here
     fi
