@@ -45,7 +45,7 @@
    
     sudo wget -O /tmp/svxlink-25.5.3-Linux.deb \
     https://github.com/f5vmr/svxlink/releases/download/V25.5.3/svxlink-25.5.3-Linux.deb
-    sudo apt install /tmp/svxlink-25.5.3Linux.deb -y
+    sudo apt install /tmp/svxlink-25.5.3-Linux.deb -y
 
     echo -e "${BLUE}#### Installing svxlink #### ${WHITE}" | sudo tee -a /var/log/install.log    
     sudo apt install -y curl apache2 apache2-bin apache2-data apache2-utils php8.2 python3-serial nodejs npm toilet --fix-missing -y
